@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Romantic Home Screen</title>
+    <!-- Import Google Font & FontAwesome untuk ikon -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at center, #2c0b0e 0%, #120304 100%);
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #f3e5e5;
+        }
+
+        /* Container utama 3D */
+        .scene {
+            width: 100%;
+            height: 60vh;
+            perspective: 1000px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Efek kelopak/partikel cahaya latar belakang */
+        .ambient-glow {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: rgba(180, 20, 40, 0.15);
+            filter: blur(80px);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        /* Wrapper khusus untuk putaran satu arah ke samping (360 derajat terus menerus) */
+        .heart-3d-wrapper {
+            position: relative;
+            width: 850px;
+            height: 850px;
+            transform-style: preserve-3d;
+            animation: rotateHeart 12s linear infinite;
+            z-index: 2;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Styling untuk gambar PNG love.png (mengatur efek berdenyut) */
+        .heart-img-3d {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 0 40px rgba(168, 28, 45, 0.8));
+            animation: heartbeat 2s ease-in-out infinite;
+        }
+
+        /* Animasi Berputar Satu Arah ke Samping secara Konsisten */
+        @keyframes rotateHeart {
+            0% {
+                transform: rotateY(0deg);
+            }
+            100% {
+                transform: rotateY(360deg);
+            }
+        }
+
+        /* Animasi Berdenyut Pelan (Tanpa merusak arah putaran) */
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(0.95);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Teks di bawah love */
+        .welcome-text {
+            text-align: center;
+            z-index: 2;
+            margin-top: 10px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .welcome-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            letter-spacing: 2px;
+            color: #f7d6d9;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .welcome-text p {
+            font-size: 0.95rem;
+            color: #bfa1a4;
+            font-weight: 300;
+        }
+
+        /* Tombol interaktif masuk */
+        .enter-btn {
+            margin-top: 25px;
+            padding: 12px 32px;
+            background: linear-gradient(135deg, #8b1e2c, #520912);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(139, 30, 44, 0.4);
+            transition: all 0.3s ease;
+            z-index: 2;
+            font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .enter-btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #a81c2d, #6b0c18);
+            box-shadow: 0 6px 20px rgba(168, 28, 45, 0.6);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cahaya latar belakang lembut -->
+    <div class="ambient-glow"></div>
+
+    <!-- Area Love 3D yang langsung mengarah ke page2.html saat diklik -->
+    <div class="scene">
+        <a href="page2.html" style="text-decoration: none; display: flex; justify-content: center; align-items: center;">
+            <div class="heart-3d-wrapper">
+                <img src="love.png" alt="Romantic 3D Love" class="heart-img-3d">
+            </div>
+        </a>
+    </div>
+
+    <!-- Teks & Tombol Navigasi Awal -->
+    <div class="welcome-text">
+        <h1>Wina Special Space</h1>
+        <p>Sentuh atau klik untuk melanjutkan kisah kita...</p>
+        <a href="page2.html" class="enter-btn">Buka Hati <i class="fa-solid fa-heart" style="margin-left: 5px; color: #ff6b7b;"></i></a>
+    </div>
+
+</body>
+</html>

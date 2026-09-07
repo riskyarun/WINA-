@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For Wina ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background: #12090b;
+            background: radial-gradient(circle at center, #231215 0%, #0c0507 100%);
+            overflow: hidden;
+            font-family: 'Lora', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .ambient-glow {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: rgba(140, 30, 45, 0.18);
+            filter: blur(130px);
+            border-radius: 50%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Style Dasar Foto (Ukuran diperbesar 2x lipat: 220px x 300px) */
+        .scattered-photo {
+            position: absolute;
+            width: 220px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 3px solid rgba(247, 214, 217, 0.5);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95);
+            z-index: 5;
+            
+            /* Semua ngumpul di tengah layar */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1) rotate(0deg);
+            
+            /* Awalnya sembunyi */
+            opacity: 0;
+            
+            transition: opacity 1s ease-in, top 1.5s cubic-bezier(0.25, 1, 0.5, 1), left 1.5s cubic-bezier(0.25, 1, 0.5, 1), transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Kelas untuk memunculkan foto di tengah */
+        .scattered-photo.show-center {
+            opacity: 1;
+        }
+
+        /* Kelas untuk menyebar ke pojok (ukuran sedikit disesuaikan agar pas di layar HP/Desktop setelah menyebar) */
+        .scattered-photo.spread {
+            opacity: 0.9;
+            width: 150px;
+            height: 205px;
+        }
+
+        /* Posisi Akhir Masing-Masing Foto di Pojok & Sisi */
+        .photo-1.spread {
+            top: 6%;
+            left: 6%;
+            transform: translate(0, 0) scale(1) rotate(-8deg);
+        }
+        .photo-2.spread {
+            top: 6%;
+            right: 6%;
+            left: auto;
+            transform: translate(0, 0) scale(1) rotate(10deg);
+        }
+        .photo-3.spread {
+            bottom: 6%;
+            left: 6%;
+            top: auto;
+            transform: translate(0, 0) scale(1) rotate(6deg);
+        }
+        .photo-4.spread {
+            bottom: 6%;
+            right: 6%;
+            top: auto;
+            left: auto;
+            transform: translate(0, 0) scale(1) rotate(-10deg);
+        }
+        .photo-5.spread {
+            top: 50%;
+            left: 3%;
+            transform: translateY(-50%) scale(1) rotate(-4deg);
+        }
+
+        /* Kotak Dialog Teks di Tengah */
+        .dialog-card {
+            position: relative;
+            z-index: 20;
+            width: 85%;
+            max-width: 350px;
+            background: rgba(26, 6, 9, 0.92);
+            border: 1px solid rgba(247, 214, 217, 0.28);
+            backdrop-filter: blur(15px);
+            padding: 38px 25px 28px 25px;
+            border-radius: 18px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9);
+            text-align: center;
+            
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+            pointer-events: none;
+            transition: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .dialog-card.show-text {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+        }
+
+        .dialog-card h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.35rem;
+            color: #f7d6d9;
+            margin-bottom: 15px;
+            letter-spacing: 1.5px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+        }
+
+        .dialog-card p {
+            font-size: 0.95rem;
+            color: #e6c5cb;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            position: relative;
+            min-height: 50px;
+        }
+
+        .btn {
+            font-family: 'Cinzel', serif;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        .btn-yes {
+            background: #821c2c;
+            color: #f7d6d9;
+            border: 1px solid rgba(247, 214, 217, 0.4);
+        }
+
+        .btn-yes:hover {
+            background: #a32336;
+            transform: scale(1.08);
+        }
+
+        .btn-no {
+            background: rgba(44, 11, 14, 0.85);
+            color: #d1b3b6;
+            border: 1px solid rgba(247, 214, 217, 0.2);
+            position: relative;
+        }
+
+        /* Respon Overlay */
+        .response-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(18, 9, 11, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease;
+        }
+
+        .response-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .response-overlay h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.7rem;
+            color: #f7d6d9;
+            margin-bottom: 15px;
+        }
+
+        .response-overlay p {
+            font-size: 1rem;
+            color: #e6c5cb;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow"></div>
+
+    <!-- Ke-5 Foto -->
+    <img src="foto1.png" alt="Wina" class="scattered-photo photo-1" id="p1">
+    <img src="foto2.png" alt="Wina" class="scattered-photo photo-2" id="p2">
+    <img src="foto3.png" alt="Wina" class="scattered-photo photo-3" id="p3">
+    <img src="foto4.png" alt="Wina" class="scattered-photo photo-4" id="p4">
+    <img src="foto5.png" alt="Wina" class="scattered-photo photo-5" id="p5">
+
+    <!-- Kotak Dialog Teks di Tengah -->
+    <div class="dialog-card" id="dialogCard">
+        <h2>For Wina ✨</h2>
+        <p>Udah yok asingnya, balik lagi kayak dulu yaaaa</p>
+        <div class="btn-group" id="btnGroup">
+            <button class="btn btn-yes" id="btnYes">Iya</button>
+            <button class="btn btn-no" id="btnNo">Tidak</button>
+        </div>
+    </div>
+
+    <!-- Respon Ketika Tombol Diklik -->
+    <div class="response-overlay" id="responseOverlay">
+        <h3 id="responseTitle">Makasih, Wina! ✨</h3>
+        <p id="responseDesc">Seneng banget dengernya. Yuk, kita mulai lembaran baru yang lebih baik lagi tanpa ada jarak.</p>
+    </div>
+
+    <script>
+        const photos = document.querySelectorAll('.scattered-photo');
+        const dialogCard = document.getElementById('dialogCard');
+        const btnYes = document.getElementById('btnYes');
+        const btnNo = document.getElementById('btnNo');
+        const responseOverlay = document.getElementById('responseOverlay');
+        const responseTitle = document.getElementById('responseTitle');
+        const responseDesc = document.getElementById('responseDesc');
+
+        // Saat halaman baru dibuka
+        window.addEventListener('load', () => {
+            // 1. Munculkan foto besar di tengah
+            photos.forEach(photo => {
+                photo.classList.add('show-center');
+            });
+
+            // 2. Tunggu 3 detik saat foto besar ngumpul di tengah
+            setTimeout(() => {
+                // 3. Gerakkan foto menyebar ke pojok
+                photos.forEach(photo => {
+                    photo.classList.add('spread');
+                });
+                
+                // 4. Setelah foto selesai bergerak ke pojok (1.5 detik), baru munculkan teks di tengah
+                setTimeout(() => {
+                    dialogCard.classList.add('show-text');
+                }, 1500);
+
+            }, 3000);
+        });
+
+        // Event Tombol "Iya"
+        btnYes.addEventListener('click', () => {
+            responseTitle.innerHTML = "Makasih, Wina! ✨";
+            responseDesc.innerHTML = "Seneng banget dengernya. Yuk, kita mulai lembaran baru yang lebih baik lagi tanpa ada jarak.";
+            responseOverlay.classList.add('show');
+        });
+
+        // Event Tombol "Tidak" (Lari jika didekati)
+        btnNo.addEventListener('mouseover', moveNoButton);
+        btnNo.addEventListener('click', (e) => {
+            e.preventDefault();
+            moveNoButton();
+        });
+
+        function moveNoButton() {
+            const x = (Math.random() - 0.5) * 180;
+            const y = (Math.random() - 0.5) * 90;
+            btnNo.style.transform = `translate(${x}px, ${y}px)`;
+        }
+    </script>
+</body>
+</html>
